@@ -1,0 +1,47 @@
+<div [formGroup]="parentForm()" class="bg-white p-6 rounded-xl shadow-sm border border-(--border)">
+  <h2 class="text-xl font-semibold mb-4 text-(--text-main)">People</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="space-y-3">
+      <h3 class="font-medium text-(--primary)">From (Sender)</h3>
+      <input
+        type="text"
+        formControlName="senderName"
+        placeholder="Your Name/Company"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none"
+      />
+      <input
+        type="text"
+        formControlName="senderMobile"
+        placeholder="Mobile Number"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none"
+      />
+      <textarea
+        formControlName="senderAddress"
+        placeholder="Your Address"
+        rows="3"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none"
+      ></textarea>
+    </div>
+    <div class="space-y-3">
+      <h3 class="font-medium text-(--primary)">To (Client)</h3>
+      <input
+        type="text"
+        formControlName="receiverName"
+        placeholder="Client Name"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none"
+      />
+      <input
+        type="text"
+        formControlName="receiverMobile"
+        placeholder="Mobile Number"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none"
+      />
+      <textarea
+        formControlName="receiverAddress"
+        placeholder="Client Address"
+        rows="3"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none"
+      ></textarea>
+    </div>
+  </div>
+</div>

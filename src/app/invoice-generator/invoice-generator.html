@@ -1,0 +1,107 @@
+<div class="min-h-screen bg-(--background) p-4 md:p-8 font-[Montserrat]">
+  <div class="max-w-7xl mx-auto">
+    <!-- Personal Header -->
+    <nav class="flex justify-between items-center py-3 mb-6 border-b border-(--border)">
+      <div class="flex flex-col font-bold text-2xl text-(--text-main) gap-2">
+        Invoice Generator
+        <span class="text-sm font-normal text-(--text-muted)">
+          Create and download professional invoices in seconds.
+        </span>
+      </div>
+      <div class="flex items-center gap-4 text-(--text-muted)">
+        <a
+          href="https://linkedin.com/in/junaidxyz"
+          target="_blank"
+          class="transition-transform hover:scale-110"
+          aria-label="LinkedIn"
+        >
+          <img src="linkedin.png" alt="LinkedIn" width="30" height="30" />
+        </a>
+        <a
+          href="https://github.com/junaidsultanxyz"
+          target="_blank"
+          class="transition-transform hover:scale-110"
+          aria-label="GitHub"
+        >
+          <img
+            src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+            alt="GitHub"
+            width="30"
+            height="30"
+          />
+        </a>
+        <a
+          href="https://devjuni.com"
+          target="_blank"
+          class="hover:text-(--primary) transition-colors"
+          aria-label="Website"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path
+              d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+            />
+          </svg>
+        </a>
+      </div>
+    </nav>
+
+    <header class="mb-8 flex flex-col md:flex-row justify-end items-center gap-4">
+      <!-- <div>
+        <h1 class="text-3xl font-bold text-(--primary) text-center md:text-left">
+          Invoice Generator
+        </h1>
+        <p class="text-(--text-muted) text-center md:text-left">
+          Create and download professional invoices in seconds.
+        </p>
+      </div> -->
+      <button
+        (click)="downloadPDF()"
+        [disabled]="isGenerating()"
+        class="bg-(--primary) hover:bg-(--primary-dark) text-white px-6 py-3 rounded-lg shadow-lg transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+      >
+        @if (!isGenerating()) {
+        <span>Download PDF</span>
+        } @if (isGenerating()) {
+        <span>Generating...</span>
+        }
+      </button>
+    </header>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Editor Section -->
+      <div class="w-full lg:w-1/2">
+        <form [formGroup]="invoiceForm" class="flex flex-col gap-4">
+          <app-invoice-settings [parentForm]="invoiceForm"></app-invoice-settings>
+          <app-invoice-meta [parentForm]="invoiceForm"></app-invoice-meta>
+          <app-invoice-people [parentForm]="invoiceForm"></app-invoice-people>
+          <app-invoice-items [parentForm]="invoiceForm"></app-invoice-items>
+          <app-invoice-bank [parentForm]="invoiceForm"></app-invoice-bank>
+          <app-invoice-tax [parentForm]="invoiceForm"></app-invoice-tax>
+        </form>
+      </div>
+
+      <!-- Preview Section -->
+      <div class="w-full lg:w-1/2">
+        <app-invoice-preview
+          [invoiceForm]="invoiceForm"
+          [pages]="pages"
+          [subTotal]="subTotal"
+          [taxAmount]="taxAmount"
+          [totalAmount]="totalAmount"
+        ></app-invoice-preview>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div [formGroup]="parentForm()" class="bg-white p-6 rounded-xl shadow-sm border border-(--border)">
+  <h2 class="text-xl font-semibold mb-4 text-(--text-main)">Invoice Details</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="col-span-1 md:col-span-2">
+      <label class="block text-sm font-medium text-gray-400 mb-1">Invoice Title</label>
+      <input
+        type="text"
+        formControlName="invoiceTitle"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) focus:border-transparent outline-none transition-all"
+      />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-400 mb-1">Invoice Number</label>
+      <input
+        type="text"
+        formControlName="invoiceNumber"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) focus:border-transparent outline-none transition-all"
+      />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-400 mb-1">Date</label>
+      <input
+        type="date"
+        formControlName="invoiceDate"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) focus:border-transparent outline-none transition-all"
+      />
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-gray-400 mb-1">Due Date</label>
+      <input
+        type="date"
+        formControlName="dueDate"
+        class="w-full p-2 rounded-lg border border-(--border) focus:ring-2 focus:ring-(--primary) focus:border-transparent outline-none transition-all"
+      />
+    </div>
+  </div>
+</div>

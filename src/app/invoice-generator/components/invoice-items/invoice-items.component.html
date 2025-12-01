@@ -1,0 +1,108 @@
+<div [formGroup]="parentForm()" class="bg-white p-6 rounded-xl shadow-sm border border-(--border)">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-xl font-semibold text-(--text-main)">Items ({{ totalCost }}/20)</h2>
+    <button
+      type="button"
+      (click)="addItem()"
+      [disabled]="totalCost >= 20"
+      class="text-sm text-(--primary) hover:text-(--primary-dark) font-medium flex items-center gap-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      + Add Item
+    </button>
+  </div>
+
+  <div formArrayName="items" class="space-y-6">
+    @for (item of items.controls; track item; let i = $index) {
+    <div
+      [formGroupName]="i"
+      class="p-4 bg-(--background) rounded-lg border border-(--border) relative group"
+    >
+      <button
+        type="button"
+        (click)="removeItem(i)"
+        class="absolute top-2 right-2 text-red-500 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+      >
+        ✕
+      </button>
+
+      <div class="grid grid-cols-12 gap-4 mb-4">
+        <div class="col-span-6">
+          <label class="block text-xs font-medium text-(--text-muted) mb-1">Item Name</label>
+          <input
+            type="text"
+            formControlName="name"
+            class="w-full p-2 rounded border border-(--border) text-sm focus:ring-1 focus:ring-(--primary) outline-none"
+          />
+        </div>
+        <div class="col-span-2">
+          <label class="block text-xs font-medium text-(--text-muted) mb-1">Qty</label>
+          <input
+            type="number"
+            formControlName="quantity"
+            class="w-full p-2 rounded border border-(--border) text-sm focus:ring-1 focus:ring-(--primary) outline-none"
+          />
+        </div>
+        <div class="col-span-3">
+          <label class="block text-xs font-medium text-(--text-muted) mb-1">Price</label>
+          <input
+            type="number"
+            formControlName="price"
+            class="w-full p-2 rounded border border-(--border) text-sm focus:ring-1 focus:ring-(--primary) outline-none"
+          />
+        </div>
+      </div>
+
+      <!-- Sub Items -->
+      <div class="pl-4 border-l-2 border-(--border)">
+        <div formArrayName="subItems" class="space-y-3">
+          @for (sub of getSubItems(i).controls; track sub; let j = $index) {
+          <div [formGroupName]="j" class="grid grid-cols-12 gap-3 items-center">
+            <div class="col-span-6">
+              <input
+                type="text"
+                formControlName="name"
+                placeholder="Sub-item name"
+                class="w-full p-1.5 rounded border border-(--border) text-xs bg-white focus:ring-1 focus:ring-(--primary) outline-none"
+              />
+            </div>
+            <div class="col-span-2">
+              <input
+                type="number"
+                formControlName="quantity"
+                placeholder="Qty"
+                class="w-full p-1.5 rounded border border-(--border) text-xs bg-white focus:ring-1 focus:ring-(--primary) outline-none"
+              />
+            </div>
+            <div class="col-span-3">
+              <input
+                type="number"
+                formControlName="price"
+                placeholder="Price"
+                class="w-full p-1.5 rounded border border-(--border) text-xs bg-white focus:ring-1 focus:ring-(--primary) outline-none"
+              />
+            </div>
+            <div class="col-span-1">
+              <button
+                type="button"
+                (click)="removeSubItem(i, j)"
+                class="text-red-400 hover:text-red-600 text-xs cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+          }
+        </div>
+        <button
+          type="button"
+          (click)="addSubItem(i)"
+          [disabled]="totalCost >= 20"
+          class="mt-2 text-xs text-(--accent) hover:underline cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:no-underline"
+        >
+          + Add Sub-item
+        </button>
+      </div>
+    </div>
+    }
+  </div>
+</div>

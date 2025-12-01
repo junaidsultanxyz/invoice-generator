@@ -1,0 +1,176 @@
+<div class="sticky top-8 space-y-8">
+  <h2 class="text-xl font-semibold mb-4 text-(--text-main) lg:hidden">Preview</h2>
+
+  <!-- Invoice Pages -->
+  @for (page of pages(); track $index; let p = $index) {
+  <div
+    class="invoice-page bg-white w-full aspect-210/297 shadow-2xl p-8 md:p-12 text-sm text-(--text-main) relative overflow-hidden flex flex-col"
+  >
+    <!-- Header Section (Only on first page) -->
+    @if (p === 0) {
+    <ng-container>
+      <div class="flex justify-between items-start mb-8 mt-4">
+        <div>
+          <h1
+            class="text-2xl font-bold tracking-tight uppercase"
+            [style.color]="invoiceForm().get('themeColor')?.value"
+          >
+            {{ invoiceForm().get('invoiceTitle')?.value }}
+          </h1>
+          <p class="text-(--text-muted) mt-1">#{{ invoiceForm().get('invoiceNumber')?.value }}</p>
+        </div>
+        <div class="text-right">
+          <p class="font-semibold text-lg">{{ invoiceForm().get('senderName')?.value }}</p>
+          <p class="text-(--text-muted) text-xs mt-1">
+            {{ invoiceForm().get('senderMobile')?.value }}
+          </p>
+          <p class="text-(--text-muted) whitespace-pre-line text-xs mt-1">
+            {{ invoiceForm().get('senderAddress')?.value }}
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-between mb-8">
+        <div>
+          <p class="text-(--text-muted) text-xs uppercase tracking-wider mb-1">Bill To</p>
+          <p class="font-semibold text-lg">{{ invoiceForm().get('receiverName')?.value }}</p>
+          <p class="text-(--text-muted) text-xs mt-1">
+            {{ invoiceForm().get('receiverMobile')?.value }}
+          </p>
+          <p class="text-(--text-muted) whitespace-pre-line text-xs mt-1">
+            {{ invoiceForm().get('receiverAddress')?.value }}
+          </p>
+        </div>
+        <div class="text-right">
+          <div class="mb-4">
+            <p class="text-(--text-muted) text-xs uppercase tracking-wider mb-1">Date</p>
+            <p class="font-medium">
+              {{ invoiceForm().get('invoiceDate')?.value | date : 'mediumDate' }}
+            </p>
+          </div>
+          <div>
+            <p class="text-(--text-muted) text-xs uppercase tracking-wider mb-1">Due Date</p>
+            <p class="font-medium">
+              {{ invoiceForm().get('dueDate')?.value | date : 'mediumDate' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    }
+
+    <!-- Table Header (Repeated on every page for clarity) -->
+    <table class="w-full mb-4">
+      <thead>
+        <tr class="border-b-2" [style.border-color]="invoiceForm().get('themeColor')?.value">
+          <th
+            class="text-left py-3 font-semibold w-1/2"
+            [style.color]="invoiceForm().get('themeColor')?.value"
+          >
+            Item
+          </th>
+          <th
+            class="text-center py-3 font-semibold"
+            [style.color]="invoiceForm().get('themeColor')?.value"
+          >
+            Qty
+          </th>
+          <th
+            class="text-right py-3 font-semibold"
+            [style.color]="invoiceForm().get('themeColor')?.value"
+          >
+            Price
+          </th>
+          <th
+            class="text-right py-3 font-semibold"
+            [style.color]="invoiceForm().get('themeColor')?.value"
+          >
+            Total
+          </th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-(--border)">
+        @for (item of page.items; track item) {
+        <!-- Main Item -->
+        <tr>
+          <td class="py-3 font-medium">{{ item.name }}</td>
+          <td class="text-center py-3">{{ item.quantity }}</td>
+          <td class="text-right py-3">{{ item.price | currency }}</td>
+          <td class="text-right py-3 font-medium">
+            {{ item.quantity * item.price | currency }}
+          </td>
+        </tr>
+        <!-- Sub Items -->
+        @for (sub of item.subItems; track sub) {
+        <tr class="text-xs text-(--text-muted) bg-[#f8fafc]">
+          <td class="py-2 pl-6">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-(--border)"></span>
+              {{ sub.name }}
+            </div>
+          </td>
+          <td class="text-center py-2">{{ sub.quantity }}</td>
+          <td class="text-right py-2">{{ sub.price | currency }}</td>
+          <td class="text-right py-2">{{ sub.quantity * sub.price | currency }}</td>
+        </tr>
+        } }
+      </tbody>
+    </table>
+
+    <!-- Spacer to push totals to bottom -->
+    <div class="grow"></div>
+
+    <!-- Totals and Bank Details -->
+    @if (page.isLast) {
+    <ng-container>
+      <div class="flex justify-between items-end mt-8">
+        <!-- Bank Details -->
+        <div class="w-1/2 pr-8">
+          <h3
+            class="text-xs font-bold uppercase tracking-wider mb-2"
+            [style.color]="invoiceForm().get('themeColor')?.value"
+          >
+            Bank Details
+          </h3>
+          <p class="font-semibold text-sm">{{ invoiceForm().get('bankName')?.value }}</p>
+          <p class="text-(--text-muted) whitespace-pre-line text-xs mt-1">
+            {{ invoiceForm().get('bankInfo')?.value }}
+          </p>
+        </div>
+
+        <!-- Totals -->
+        <div class="w-5/12 space-y-2 text-sm">
+          <div class="flex justify-between text-(--text-muted)">
+            <span>Subtotal</span>
+            <span>{{ subTotal() | currency }}</span>
+          </div>
+          <div class="flex justify-between text-(--text-muted)">
+            <span>Tax ({{ invoiceForm().get('taxRate')?.value }}%)</span>
+            <span>{{ taxAmount() | currency }}</span>
+          </div>
+          <div
+            class="flex justify-between text-lg font-bold border-t border-(--border) pt-2"
+            [style.color]="invoiceForm().get('themeColor')?.value"
+          >
+            <span>Total</span>
+            <span>{{ totalAmount() | currency }}</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    }
+
+    <!-- Footer Text (At the bottom) -->
+    @if (page.isLast) {
+    <div class="mt-12 text-center text-(--text-muted) text-xs mb-8">
+      <p>Thank you for your business!</p>
+    </div>
+    }
+
+    <!-- Page Number -->
+    <div class="absolute bottom-4 right-4 text-[10px] text-(--text-muted)">
+      Page {{ p + 1 }} of {{ pages().length }}
+    </div>
+  </div>
+  }
+</div>

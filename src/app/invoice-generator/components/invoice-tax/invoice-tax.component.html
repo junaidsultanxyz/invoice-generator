@@ -1,0 +1,10 @@
+<div [formGroup]="parentForm()" class="bg-white p-6 rounded-xl shadow-sm border border-(--border)">
+  <div class="flex justify-between items-center">
+    <label class="font-medium text-(--text-main)">Tax Rate (%)</label>
+    <input
+      type="number"
+      formControlName="taxRate"
+      class="w-24 p-2 rounded-lg border border-(--border) text-right focus:ring-2 focus:ring-(--primary) outline-none"
+    />
+  </div>
+</div>

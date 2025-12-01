@@ -1,0 +1,15 @@
+<div [formGroup]="parentForm()" class="bg-white p-6 rounded-xl shadow-sm border border-(--border)">
+  <h2 class="text-xl font-semibold mb-4 text-(--text-main)">Settings</h2>
+  <div class="flex items-center gap-4">
+    <label class="block text-sm font-medium text-(--text-muted)">Theme Color</label>
+    <div
+      class="relative w-10 h-10 rounded-full overflow-hidden border border-(--border) cursor-pointer shadow-sm"
+    >
+      <input
+        type="color"
+        formControlName="themeColor"
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] p-0 border-0 cursor-pointer"
+      />
+    </div>
+  </div>
+</div>
