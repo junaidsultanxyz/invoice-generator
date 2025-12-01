@@ -41,15 +41,15 @@
             {{ invoiceForm().get('receiverAddress')?.value }}
           </p>
         </div>
-        <div class="text-right">
-          <div class="mb-4">
-            <p class="text-(--text-muted) text-xs uppercase tracking-wider mb-1">Date</p>
+        <div class="text-right space-y-2">
+          <div>
+            <p class="text-(--text-muted) text-xs uppercase tracking-wider">Date</p>
             <p class="font-medium">
               {{ invoiceForm().get('invoiceDate')?.value | date : 'mediumDate' }}
             </p>
           </div>
           <div>
-            <p class="text-(--text-muted) text-xs uppercase tracking-wider mb-1">Due Date</p>
+            <p class="text-(--text-muted) text-xs uppercase tracking-wider">Due Date</p>
             <p class="font-medium">
               {{ invoiceForm().get('dueDate')?.value | date : 'mediumDate' }}
             </p>
